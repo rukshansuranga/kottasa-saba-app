@@ -1,0 +1,142 @@
+@startuml
+
+' Core Data Model
+
+entity District {
+    *district_id: bigint(10)
+    name: varchar(50)
+    title: varchar(50)
+}
+
+entity DivisionalSecretariats {
+    *divisionalsecretariats_id: bigint(10)
+    name: varchar(50)
+    title: varchar(50)
+    district_id: bigint(10)
+} 
+
+
+entity GNDivision {
+    *gndivision_id: bigint(10)
+    name: varchar(50)
+    title: varchar(50)
+    divisionalsecretariats_id: bigint(10)
+}
+
+entity KottasaSaba {
+    *kottasa_id: bigint(10)
+    name: varchar(50)
+    title: varchar(50)
+    gndivision_id: bigint(10)
+}
+
+entity KottasaSabaWaraya {
+    *kottasa_waraya_id: bigint(10)
+    name: varchar(50)
+    startDate: timestamp(3)
+    endDate: timestamp(3)
+    kottasa_id: bigint(10)
+}
+
+entity People {
+    *people_id: bigint(10)
+    firstName: varchar(50)
+    lastName: varchar(50)
+    nicName: varchar(50)
+    telephone: varchar(10)
+    mobile: varchar(10)
+    email: varchar(30)
+    birthday: timestamp(3)
+    nic: varchar(20)
+    gndivision_id: bigint(10)
+
+}
+
+
+entity Election {
+    *election_id: bigint(10)
+    location: varchar(100)
+    heldDate: timestamp(3)
+    Note: varchar(100)
+    kottasa_waraya_id: bigint(10)
+}
+
+entity Leader {
+    *leader_id: bigint(100)
+    designation: varchar(20)
+    people_id: bigint(10)
+    election_id: bigint(10)
+}
+
+entity Meeting {
+    *meeting_id: bigint(10)
+    place: varchar(50)
+    address: varchar(100)
+    heldDate: timestamp(3)
+    description: varchar(1000)
+    kottasa_waraya_id: bigint(10)
+}
+
+entity Attendance {
+    *attendance_id: bigint(10)
+    people_id: bigint(10)
+    meeting_id: bigint(10)
+}
+
+' Project Data Model
+
+entity ProposedProjectSession {
+    *proposed_project_session_id: int(10)
+    name: varchar(100)
+    meeting_id: bigint(10)
+}
+
+entity Project {
+    *project_id: bigint(10)
+    name: varchar(100)
+    title: varchar(200)
+    proposedDate: datetime(3)
+    proposedBy: int(10)
+    secondedBy: int(10)
+    status: varchar(10)
+    proposed_project_session_id: int(10)
+}
+
+entity ProcumentCompany {
+    *procument_company_id: int(10)
+    name: varchar(100)
+    address1: varchar(100)
+    address2: varchar(100)
+    city: varchar(100)
+    mobile: varchar(15)
+    email: varchar(100)
+}
+
+entity ProcumentProject {
+    *procument_project_id: int(10)
+    project_id: int(10)
+    procument_company_id: int(10)
+}
+
+entity Attendance {
+    *attendance_id: bigint(10)
+    people_id: bigint(10)
+    meeting_id: bigint(10)
+}
+
+
+
+District o--|| DivisionalSecretariats
+DivisionalSecretariats o--|| GNDivision
+GNDivision o--|| KottasaSaba
+KottasaSaba o--|| People
+KottasaSaba o--|| KottasaSabaWaraya
+KottasaSabaWaraya o--|| Election
+Election o--|| Leader
+KottasaSabaWaraya o--|| Meeting
+Meeting o--|| Attendance
+
+Meeting o--o ProposedProjectSession
+ProposedProjectSession o--|| Project 
+
+@endum

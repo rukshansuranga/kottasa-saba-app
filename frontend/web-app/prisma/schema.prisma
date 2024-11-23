@@ -1,0 +1,134 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider      = "prisma-client-js"
+  binaryTargets = ["native", "linux-musl-openssl-3.0.x"]
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model District {
+  district_id Int    @id @default(autoincrement())
+  name        String @unique
+  title       String
+}
+
+model DivisionalSecretariat {
+  divisionalsecretariat_id Int     @id @default(autoincrement())
+  name                     String  @unique
+  title                    String?
+  district_id              Int
+}
+
+model GNDivision {
+  gndivision_id            Int     @id @default(autoincrement())
+  name                     String  @unique
+  title                    String?
+  divisionalsecretariat_id Int
+}
+
+model KottasaSaba {
+  kottasa_id    String   @id @default(cuid())
+  name          String   @unique
+  title         String?
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+  gndivision_id Int
+}
+
+model seedKottasaSabaWaraya {
+  kottasa_waraya_id String   @id @default(cuid())
+  name              String
+  startDate         DateTime
+  endDate           DateTime
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
+  kottasa_id        String
+}
+
+model People {
+  person_id     String   @id @default(cuid())
+  firstName     String
+  lastName      String?
+  nicName       String?
+  telephone     String?
+  mobile        String
+  email         String?
+  birthday      DateTime
+  nic           String   @unique
+  status        String?
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+  gndivision_id Int
+  kottasa_id    String
+}
+
+model Election {
+  election_id       String   @id @default(cuid())
+  location          String
+  heldDate          DateTime
+  note              String?
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
+  kottasa_waraya_id String
+}
+
+model Leaders {
+  leader_id   String   @id @default(cuid())
+  designation String
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  people_id   String
+  election_id String
+}
+
+model Meeting {
+  meeting_id        String   @id @default(cuid())
+  // designation       String
+  place             String
+  name              String
+  address           String?
+  heldDate          DateTime
+  description       String?
+  createdPerson     String
+  status            String?
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
+  kottasa_waraya_id String
+}
+
+model Attendance {
+  attendance_id String   @id @default(cuid())
+  people_id     String
+  meeting_id    String
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+}
+
+model ProposalSession {
+  proposed_session_id String   @id @default(cuid())
+  name                String
+  createdAt           DateTime @default(now())
+  updatedAt           DateTime @updatedAt
+  meeting_id          String
+}
+
+model Project {
+  project_id          String   @id @default(cuid())
+  name                String
+  title               String?
+  proposedDate        DateTime
+  proposedBy          String
+  secondedBy          String
+  status              String?
+  createdAt           DateTime @default(now())
+  updatedAt           DateTime @updatedAt
+  proposed_session_id String
+}

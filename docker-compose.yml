@@ -1,0 +1,68 @@
+services:
+  # db:
+  #   image: postgres
+  #   container_name: local_pgdb
+  #   restart: always
+  #   ports:
+  #     - "5432:5432"
+  #   environment:
+  #     POSTGRES_USER: rukshansuranga
+  #     POSTGRES_PASSWORD: test123
+  #   volumes:
+  #     - local_pgdata:/var/lib/postgresql/data
+  #   # healthcheck:
+  #   #   test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER} -d ${POSTGRES_DB}"]
+  #   #   interval: 10s
+  #   #   retries: 5
+  #   #   start_period: 30s
+  #   #   timeout: 10s
+
+  pgadmin:
+    image: dpage/pgadmin4
+    container_name: pgadmin4_container
+    restart: always
+    ports:
+      - "8888:80"
+    environment:
+      PGADMIN_DEFAULT_EMAIL: rukshansuranga@gmail.com
+      PGADMIN_DEFAULT_PASSWORD: test123
+    volumes:
+      - pgadmin-data:/var/lib/pgadmin
+
+  # identity-svc:
+  #   image: kottasa-saba/identity-svc:latest
+  #   build:
+  #     context: .
+  #     dockerfile: src/IdentityService/Dockerfile
+  #   environment:
+  #     - ASPNETCORE_ENVIRONMENT=Docker
+  #     - ASPNETCORE_URLS=http://+:80
+  #     - IssuerUri=https://id.carsties.local
+  #     - ClientApp=https://app.carsties.local
+  #     - ConnectionStrings__DefaultConnection=Server=postgres; User Id=postgres; Password=postgrespw; Database=identity
+  #     - VIRTUAL_HOST=id.carsties.local
+  #   ports:
+  #     - 5000:80
+  #   depends_on:
+  #     - db
+
+  web-app:
+    image: kottasa-saba/web-app
+    build: 
+      context: .
+      dockerfile: frontend/web-app/Dockerfile
+    ports:
+      - 3000:3000
+    volumes:
+      - /var/lib/web/data
+    environment:
+      DATABASE_URL: postgresql://rukshansuranga:test123@db:5432/kottasa-saba?schema=public
+    # depends_on:
+    #   - db
+      # db:
+      #   condition: service_healthy
+      #   restart: true
+volumes:
+  # local_pgdata:
+  pgadmin-data:
+  
