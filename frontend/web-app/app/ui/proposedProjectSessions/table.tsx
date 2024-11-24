@@ -27,7 +27,7 @@ export default async function ProposedProjectSessionTable() {
               </tr>
             </thead>
             <tbody className="bg-white">
-              {sessions?.map((session) => (
+              {sessions?.map((session: any) => (
                 <tr
                   key={session.proposed_session_id}
                   className="w-full border-b py-3 text-sm last-of-type:border-none [&:first-child>td:first-child]:rounded-tl-lg [&:first-child>td:last-child]:rounded-tr-lg [&:last-child>td:first-child]:rounded-bl-lg [&:last-child>td:last-child]:rounded-br-lg"

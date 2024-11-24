@@ -101,7 +101,7 @@ export default function Form({ people, sessions }:
               <option value="" disabled>
                 Select a Person
               </option>
-              {people.map((person) => (
+              {people.map((person: CustomerField) => (
                 <option key={person.id} value={person.id}>
                   {person.name}
                 </option>
@@ -125,7 +125,7 @@ export default function Form({ people, sessions }:
               <option value="" disabled>
                 Select a Person
               </option>
-              {people.map((person) => (
+              {people.map((person: CustomerField) => (
                 <option key={person.id} value={person.id}>
                   {person.name}
                 </option>
@@ -198,7 +198,7 @@ export default function Form({ people, sessions }:
               <option value="" disabled>
                 Select Session
               </option>
-              {sessions.map((session) => (
+              {sessions.map((session: CustomerField) => (
                 <option key={session.id} value={session.id}>
                   {session.name}
                 </option>

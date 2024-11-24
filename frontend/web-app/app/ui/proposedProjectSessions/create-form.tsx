@@ -71,7 +71,7 @@ export default function Form({ meetings }: { meetings: CustomerField[] }) {
               <option value="" disabled>
                 Select the meeting
               </option>
-              {meetings.map((meeting) => (
+              {meetings.map((meeting: CustomerField) => (
                 <option key={meeting.id} value={meeting.id}>
                   {meeting.name}
                 </option>

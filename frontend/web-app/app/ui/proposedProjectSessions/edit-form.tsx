@@ -61,7 +61,7 @@ export default function EditProposedSessionForm({
               <option value="" disabled>
                 Select Session
               </option>
-              {meetings.map((meeting) => (
+              {meetings.map((meeting: CustomerField) => (
                 <option key={meeting.id} value={meeting.id}>
                   {meeting.name}
                 </option>
