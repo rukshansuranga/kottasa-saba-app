@@ -28,7 +28,7 @@ jobs:
 
       - name: build image
         run: |
-          docker build ./frontend/web-app/ -t rukshansuranga/kottasa-saba-web:latest
+          docker build -f ./frontend/web-app/Dockerfile  . -t rukshansuranga/kottasa-saba-web:latest
       - name: push image to docker hub
         run: |
           docker push rukshansuranga/kottasa-saba-web:latest
