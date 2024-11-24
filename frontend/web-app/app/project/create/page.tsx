@@ -26,8 +26,8 @@ export default async function Page() {
           },
         ]}
       />
-      <Form people={people.map(m => { return { id: m.person_id, name: m.firstName } })}
-        sessions={sessions.map(m => { return { id: m.proposed_session_id, name: m.name } })}
+      <Form people={people.map((m: any) => { return { id: m.person_id, name: m.firstName } })}
+        sessions={sessions.map((m: any) => { return { id: m.proposed_session_id, name: m.name } })}
       />
     </main>
   );
