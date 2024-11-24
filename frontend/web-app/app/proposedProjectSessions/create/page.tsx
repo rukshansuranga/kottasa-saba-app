@@ -22,7 +22,7 @@ export default async function Page() {
           },
         ]}
       />
-      <Form meetings={meetings.map(m => { return { id: m.meeting_id, name: m.name } })} />
+      <Form meetings={meetings.map((m: any) => { return { id: m.meeting_id, name: m.name } })} />
     </main>
   );
 }
