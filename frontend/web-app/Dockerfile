@@ -15,6 +15,8 @@ COPY frontend/web-app ./
 
 ENV NEXT_TELEMETRY_DISABLED 1
 
+RUN npx prisma generate
+
 RUN yarn run build
 
 # production image, copy all files and run next
