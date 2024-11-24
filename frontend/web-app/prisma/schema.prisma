@@ -11,7 +11,7 @@ generator client {
 
 datasource db {
   provider = "postgresql"
-  url      = env("DATABASE_URL")
+  url      = "postgresql://ks-core_owner:2SDV4qPFHonJ@ep-empty-snow-a1wu3kqm.ap-southeast-1.aws.neon.tech/ks-core?sslmode=require"
 }
 
 model District {
