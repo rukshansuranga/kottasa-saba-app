@@ -30,6 +30,11 @@ jobs:
     # - name: Print GITHUB_WORKSPACE
     #   run: echo ${GITHUB_WORKSPACE}
 
+    - name: create env file
+      run: |
+        touch .env
+        echo DATABASE_URL=${{ secrets.DATABASE_URL }} >> .env
+
     - uses: actions/checkout@v3
     - name: Build the Docker image
       run: docker compose build --no-cache --force-rm 
