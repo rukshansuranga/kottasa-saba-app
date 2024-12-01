@@ -1,0 +1,29 @@
+name: Build and Publish image to Docker Hub
+
+on:
+  push:
+    [workflow_dispatch]
+    branches: [ "dev", "main" ]
+
+jobs:
+    build-and-deploy
+        runs-on: ubuntu-latest
+
+        steps:
+        
+        - name: Checkout code
+          uses: actions/checkout@main
+
+        - name: Log into Azure
+          uses: Azure/login@v1
+          with: 
+            creds: ${{secrets.AZURE_CREDENTIALS}}
+
+        - name: Deploy Bicep file
+          uses: azure/arm-deploy@v1
+          with:
+            subscriptionId: ${{}}
+            resourceGroupName: ${{}}
+            template: ./main.bicep
+            parameters: 'storagePrefix=mystore storageSKU=Standard_LRS'
+            failOnSteErr: false
